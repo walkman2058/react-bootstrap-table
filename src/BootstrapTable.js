@@ -368,6 +368,7 @@ class BootstrapTable extends Component {
             isSelectAll={ isSelectAll }
             reset={ this.state.reset }
             expandColumnVisible={ expandColumnOptions.expandColumnVisible }
+            autoAffixContainer={ this }
             expandColumnComponent={ expandColumnOptions.expandColumnComponent }
             expandColumnBeforeSelectColumn={ expandColumnOptions.expandColumnBeforeSelectColumn }>
             { this.props.children }

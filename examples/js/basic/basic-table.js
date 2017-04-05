@@ -17,7 +17,7 @@ function addProducts(quantity) {
   }
 }
 
-addProducts(5);
+addProducts(50);
 
 export default class BasicTable extends React.Component {
   render() {

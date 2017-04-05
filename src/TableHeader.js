@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
+import AutoAffix from 'react-overlays/lib/AutoAffix';
 import Const from './Const';
 import classSet from 'classnames';
 import SelectRowHeaderColumn from './SelectRowHeaderColumn';
@@ -92,15 +93,22 @@ class TableHeader extends Component {
       );
     });
 
+    /* eslint-disable no-console */
+    console.log(this.props.autoAffixContainer);
+    /* eslint-enable no-console */
     return (
-      <div ref='container' className={ containerClasses } style={ this.props.style }>
-        <table className={ tableClasses }>
-          { React.cloneElement(this.props.colGroups, { ref: 'headerGrp' }) }
-          <thead ref='header'>
-            { trs }
-          </thead>
-        </table>
-      </div>
+      <AutoAffix affixStyle={ { zIndex: 10 } } container={ () => {
+        return this.props.autoAffixContainer;
+      } }>
+        <div ref='container' className={ containerClasses } style={ this.props.style }>
+          <table className={ tableClasses }>
+            { React.cloneElement(this.props.colGroups, { ref: 'headerGrp' }) }
+            <thead ref='header'>
+              { trs }
+            </thead>
+          </table>
+        </div>
+      </AutoAffix>
     );
   }
 
