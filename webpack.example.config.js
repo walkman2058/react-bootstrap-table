@@ -51,11 +51,5 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js'),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-    new webpack.ProgressPlugin(function(percentage, message) {
-      const percent = Math.round(percentage * 100);
-      process.stderr.clearLine();
-      process.stderr.cursorTo(0);
-      process.stderr.write(percent + '% ' + message);
-    })
   ]
 };

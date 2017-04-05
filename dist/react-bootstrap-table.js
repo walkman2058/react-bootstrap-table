@@ -708,6 +708,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	              autoAffixContainer: this,
 	              expandColumnComponent: expandColumnOptions.expandColumnComponent,
 	              expandColumnBeforeSelectColumn: expandColumnOptions.expandColumnBeforeSelectColumn },
+	            'stickyHeaders=',
+	            this.props.stickyHeaders,
+	            '>',
 	            this.props.children
 	          ),
 	          _react2.default.createElement(_TableBody2.default, { ref: 'body',
@@ -1796,7 +1799,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    expandColumnVisible: _react.PropTypes.bool,
 	    expandColumnComponent: _react.PropTypes.func,
 	    expandColumnBeforeSelectColumn: _react.PropTypes.bool
-	  })
+	  }),
+	  stickyHeaders: _react.PropTypes.bool
 	};
 	BootstrapTable.defaultProps = {
 	  scrollTop: undefined,
@@ -1931,7 +1935,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  exportCSV: false,
 	  csvFileName: 'spreadsheet.csv',
-	  ignoreSinglePage: false
+	  ignoreSinglePage: false,
+	  stickyHeaders: false
 	};
 
 	var _default = BootstrapTable;
@@ -2281,29 +2286,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	        );
 	      });
 
-	      /* eslint-disable no-console */
-	      console.log(this.props.autoAffixContainer);
-	      /* eslint-enable no-console */
-	      return _react2.default.createElement(
-	        _AutoAffix2.default,
-	        { affixStyle: { zIndex: 10 }, container: function container() {
-	            return _this4.props.autoAffixContainer;
-	          } },
+	      var tableHeaders = _react2.default.createElement(
+	        'div',
+	        { ref: 'container', className: containerClasses, style: this.props.style },
 	        _react2.default.createElement(
-	          'div',
-	          { ref: 'container', className: containerClasses, style: this.props.style },
+	          'table',
+	          { className: tableClasses },
+	          _react2.default.cloneElement(this.props.colGroups, { ref: 'headerGrp' }),
 	          _react2.default.createElement(
-	            'table',
-	            { className: tableClasses },
-	            _react2.default.cloneElement(this.props.colGroups, { ref: 'headerGrp' }),
-	            _react2.default.createElement(
-	              'thead',
-	              { ref: 'header' },
-	              trs
-	            )
+	            'thead',
+	            { ref: 'header' },
+	            trs
 	          )
 	        )
 	      );
+
+	      return this.props.stickyHeaders ? _react2.default.createElement(
+	        _AutoAffix2.default,
+	        { affixStyle: { zIndex: 10, backgroundColor: '#fff' }, container: function container() {
+	            return _this4.props.autoAffixContainer;
+	          } },
+	        tableHeaders
+	      ) : tableHeaders;
 	    }
 	  }, {
 	    key: '__getHeaderColGrouop__REACT_HOT_LOADER__',
@@ -2362,7 +2366,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  reset: _react.PropTypes.bool,
 	  expandColumnVisible: _react.PropTypes.bool,
 	  expandColumnComponent: _react.PropTypes.func,
-	  expandColumnBeforeSelectColumn: _react.PropTypes.bool
+	  expandColumnBeforeSelectColumn: _react.PropTypes.bool,
+	  autoAffixContainer: _react.PropTypes.node,
+	  stickyHeaders: _react.PropTypes.bool
 	};
 
 	var _default = TableHeader;

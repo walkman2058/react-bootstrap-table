@@ -93,22 +93,31 @@ class TableHeader extends Component {
       );
     });
 
-    /* eslint-disable no-console */
-    console.log(this.props.autoAffixContainer);
-    /* eslint-enable no-console */
+    const tableHeaders = (
+      <table className={ tableClasses }>
+          { React.cloneElement(this.props.colGroups, { ref: 'headerGrp' }) }
+        <thead ref='header'>
+          { trs }
+        </thead>
+      </table>
+    );
+
+    if (this.props.stickyHeaders) {
+      return (
+        <AutoAffix affixStyle={ { zIndex: 10, backgroundColor: '#fff' } } container={ () => {
+          return this.props.autoAffixContainer;
+        } }>
+          <div ref='container' className={ containerClasses } style={ this.props.style }>
+            { tableHeaders }
+          </div>
+        </AutoAffix>
+      );
+    }
+
     return (
-      <AutoAffix affixStyle={ { zIndex: 10 } } container={ () => {
-        return this.props.autoAffixContainer;
-      } }>
-        <div ref='container' className={ containerClasses } style={ this.props.style }>
-          <table className={ tableClasses }>
-            { React.cloneElement(this.props.colGroups, { ref: 'headerGrp' }) }
-            <thead ref='header'>
-              { trs }
-            </thead>
-          </table>
-        </div>
-      </AutoAffix>
+      <div ref='container' className={ containerClasses } style={ this.props.style }>
+        { tableHeaders }
+      </div>
     );
   }
 
@@ -162,7 +171,9 @@ TableHeader.propTypes = {
   reset: PropTypes.bool,
   expandColumnVisible: PropTypes.bool,
   expandColumnComponent: PropTypes.func,
-  expandColumnBeforeSelectColumn: PropTypes.bool
+  expandColumnBeforeSelectColumn: PropTypes.bool,
+  autoAffixContainer: PropTypes.node,
+  stickyHeaders: PropTypes.bool
 };
 
 export default TableHeader;
