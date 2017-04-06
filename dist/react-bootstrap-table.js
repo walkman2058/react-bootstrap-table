@@ -707,10 +707,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	              expandColumnVisible: expandColumnOptions.expandColumnVisible,
 	              autoAffixContainer: this,
 	              expandColumnComponent: expandColumnOptions.expandColumnComponent,
-	              expandColumnBeforeSelectColumn: expandColumnOptions.expandColumnBeforeSelectColumn },
-	            'stickyHeaders=',
-	            this.props.stickyHeaders,
-	            '>',
+	              expandColumnBeforeSelectColumn: expandColumnOptions.expandColumnBeforeSelectColumn,
+	              stickyHeaders: this.props.stickyHeaders },
 	            this.props.children
 	          ),
 	          _react2.default.createElement(_TableBody2.default, { ref: 'body',
@@ -2287,27 +2285,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 
 	      var tableHeaders = _react2.default.createElement(
-	        'div',
-	        { ref: 'container', className: containerClasses, style: this.props.style },
+	        'table',
+	        { className: tableClasses },
+	        _react2.default.cloneElement(this.props.colGroups, { ref: 'headerGrp' }),
 	        _react2.default.createElement(
-	          'table',
-	          { className: tableClasses },
-	          _react2.default.cloneElement(this.props.colGroups, { ref: 'headerGrp' }),
-	          _react2.default.createElement(
-	            'thead',
-	            { ref: 'header' },
-	            trs
-	          )
+	          'thead',
+	          { ref: 'header' },
+	          trs
 	        )
 	      );
 
-	      return this.props.stickyHeaders ? _react2.default.createElement(
-	        _AutoAffix2.default,
-	        { affixStyle: { zIndex: 10, backgroundColor: '#fff' }, container: function container() {
-	            return _this4.props.autoAffixContainer;
-	          } },
+	      if (this.props.stickyHeaders) {
+	        return _react2.default.createElement(
+	          _AutoAffix2.default,
+	          { affixStyle: { zIndex: 10, backgroundColor: '#fff' }, container: function container() {
+	              return _this4.props.autoAffixContainer;
+	            } },
+	          _react2.default.createElement(
+	            'div',
+	            { ref: 'container', className: containerClasses, style: this.props.style },
+	            tableHeaders
+	          )
+	        );
+	      }
+
+	      return _react2.default.createElement(
+	        'div',
+	        { ref: 'container', className: containerClasses, style: this.props.style },
 	        tableHeaders
-	      ) : tableHeaders;
+	      );
 	    }
 	  }, {
 	    key: '__getHeaderColGrouop__REACT_HOT_LOADER__',
